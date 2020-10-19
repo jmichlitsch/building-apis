@@ -7,17 +7,18 @@ class StoreSerializer
           "type": "store",
           "id": store.id,
           "attributes": {
+            "id": store.id,
             "name": store.name
           },
           "relationships": {
-            "books": store.books.map do |book|
-              {
-                "data": {
-                  "type": "book",
-                  "id": book.id
+            "books": {
+              "data": store.books.map do |book|
+                {
+                  "id": book.id,
+                  "type": "book"
                 }
-              }
-            end
+              end
+            }
           }
         }
       end
