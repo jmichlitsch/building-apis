@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 2020_10_19_155439) do
     t.integer "number_sold"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "popularity"
   end
 
   create_table "store_books", force: :cascade do |t|

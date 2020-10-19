@@ -17,10 +17,21 @@ end
 books = Book.all
 
 books.each do |book|
-  StoreBook.create!(
-    book_id: book.id,
-    store_id: rand(1..5),
-    book_price: rand(100..10000),
-    quantity: rand(1..10)
-  )
+  store_id_1 = rand(1..5)
+  store_id_2 = rand(1..5)
+
+  StoreBook.create!([
+      {
+        book_id: book.id,
+        store_id: store_id_1,
+        book_price: rand(100..10000),
+        quantity: rand(1..10)
+      },
+      {
+        book_id: book.id,
+        store_id: store_id_2,
+        book_price: rand(100..10000),
+        quantity: rand(1..10)
+      }
+    ])
 end
