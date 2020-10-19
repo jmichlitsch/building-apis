@@ -42,4 +42,52 @@ describe 'Stores API' do
       end
     end
   end
+
+  it 'sends a single store' do
+    id = create(:store).id
+
+    get "/api/v1/stores/#{id}"
+
+    expect(response).to be_successful
+
+    resp = JSON.parse(response.body, symbolize_names: true)
+
+    expect(resp[:data]).to be_a(Hash)
+
+    expect(resp[:data]).to have_key(:id)
+    expect(resp[:data][:id]).to be_a(String)
+
+    expect(resp[:data]).to have_key(:type)
+    expect(resp[:data][:type]).to be_a(String)
+
+    expect(resp[:data]).to have_key(:attributes)
+    expect(resp[:data][:attributes]).to be_a(Hash)
+
+    attributes = resp[:data][:attributes]
+    expect(attributes).to have_key(:id)
+    expect(attributes[:id]).to be_an(Integer)
+
+    expect(attributes).to have_key(:name)
+    expect(attributes[:name]).to be_a(String)
+
+    expect(resp[:data]).to have_key(:relationships)
+    expect(resp[:data][:relationships]).to be_a(Hash)
+
+    relationships = resp[:data][:relationships]
+    expect(relationships).to have_key(:books)
+    expect(relationships[:books]).to be_a(Hash)
+
+    expect(relationships[:books]).to have_key(:data)
+    expect(relationships[:books][:data]).to be_an(Array)
+
+    books = relationships[:books][:data]
+
+    books.each do |book|
+      expect(book).to have_key(:id)
+      expect(book[:id]).to be_a(String)
+
+      expect(book).to have_key(:type)
+      expect(book[:type]).to be_a(String)
+    end
+  end
 end
